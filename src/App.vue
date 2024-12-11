@@ -38,10 +38,6 @@ body{
 }
 </style>
 <style scoped>
-.content >>> .robot-name{
-  color: red;
-  border: 2px solid blue;
-}
 main{
   margin: 0 auto;
   padding: 30px;
