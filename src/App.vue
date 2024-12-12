@@ -13,20 +13,23 @@
     <div class="robot-name">
       This is a test
 
-    <RobotBuilder/>
+    <!-- <RobotBuilder/> -->
+     <Search />
   </div>
   </main>
 </template>
 
 <script>
 // import HomePage from './home/HomePage.vue';
-import RobotBuilder from './build/RobotBuilder.vue';
+// import RobotBuilder from './build/RobotBuilder.vue';
+import Search from './search/Search.vue';
 
 export default {
   name: 'App',
   components: {
     // HomePage,
-    RobotBuilder,
+    // RobotBuilder,
+    Search,
   },
 };
 </script>
