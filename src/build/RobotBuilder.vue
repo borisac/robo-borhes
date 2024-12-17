@@ -1,6 +1,7 @@
 <template>
 
 <div class="content">
+  <div class="part-info" id="partInfo"> </div>
   <div class="preview">
     <CollapsibleSection>
       <div class="preview-content">
@@ -244,6 +245,14 @@ td, th{
 }
 .rotate-left {
   transform: rotate(-90deg);
+}
+.part-info {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 210px;
+  height: 210px;
+  padding: 5px;
 }
 
 </style>

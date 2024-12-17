@@ -6,7 +6,7 @@
         </div>
         <!-- Toggleable -->
         <slot v-if="open">
-<div>DefaultContent</div>
+            <div>DefaultContent</div>
         </slot>
     </div>
 </template>

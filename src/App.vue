@@ -11,8 +11,6 @@
   </header>
   <main>
     <div class="robot-name">
-      This is a test
-
     <RobotBuilder/>
      <!-- <Search /> -->
   </div>
