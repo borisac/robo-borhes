@@ -1,7 +1,7 @@
 <template>
 
 <div class="content">
-  <div class="part-info" id="partInfo"> </div>
+  <!-- <div class="part-info" id="partInfo"> </div> -->
   <div class="preview">
     <CollapsibleSection>
       <div class="preview-content">
@@ -25,7 +25,7 @@
             <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
         </div> -->
         <PartSelector :parts = "availableParts.heads" position="top"
-          @partSelected="part => selectedRobot.head=part"/>
+          @partSelected ="part => selectedRobot.head=part"/>
     </div>
     <div class="middle-row">
       <PartSelector :parts = "availableParts.arms" position="left"
