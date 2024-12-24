@@ -1,6 +1,6 @@
 <template>
 
-<div class="content">
+<div v-if ="availableParts" class="content">
   <!-- <div class="part-info" id="partInfo"> </div> -->
   <div class="preview">
     <CollapsibleSection>
@@ -40,39 +40,35 @@
       <PartSelector :parts = "availableParts.bases" position="bottom"
       @partSelected="part => selectedRobot.base = part"/>
     </div>
-<div>
-    <h1 style="text-align: left">Cart</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Robot</th>
-            <th class="cost">Cost</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="(robot, index) in cart" :key="index">
-            <td>{{robot.head.title}}</td>
-            <td class="cost">{{robot.cost}}</td>
-        </tr>
-    </tbody>
-</table>
-</div>
+
   </div>
 </template>
 
 <script>
-import availableParts from '../data/parts';
+// import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default {
   name: 'RobotBuilder',
+  created() {
+    this.$store.dispatch('getParts');
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.addedToCart) {
+      next(true);
+    } else {
+      // eslint-disable-next-line no-restricted-globals
+      const response = confirm('You have not added your robot to car, are you sure you want to leave');
+      next(response);
+    }
+  },
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
+      addedToCart: false,
       cart: [],
-      availableParts,
       selectedRobot: {
         head: {},
         leftArm: {},
@@ -90,10 +86,15 @@ export default {
       const robot = this.selectedRobot;
       const cost = robot.head.cost + robot.rightArm.cost + robot.leftArm.cost +
       robot.torso.cost + robot.base.cost;
-      this.cart.push({ ...robot, cost });
+      this.$store.commit('addRobotToCart', { ...robot, cost });
+      // this.cart.push({ ...robot, cost });
+      this.addedToCart = true;
     },
   },
   computed: {
+    availableParts() {
+      return this.$store.state.parts;
+    },
     saleBorderClass() {
       return this.selectedRobot.head.onSale ? 'sale-border' : '';
     },

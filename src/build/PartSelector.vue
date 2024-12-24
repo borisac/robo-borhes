@@ -1,6 +1,6 @@
 <template>
   <div class="part" :class="position">
-    <div>User : {{ user.userName }}</div>
+
     <router-link :to="{
         name: 'Parts',
         params: {

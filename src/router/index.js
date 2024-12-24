@@ -10,6 +10,7 @@ import RobotArms from '../parts/RobotArms.vue';
 import RobotBases from '../parts/RobotBases.vue';
 import SidebarBuild from '../sidebars/SidebarBuild.vue';
 import SidebarStandard from '../sidebars/SidebarStandard.vue';
+import ShopingCart from '../cart/ShopingCart.vue';
 
 export default createRouter({
   history: createWebHistory(),
@@ -30,6 +31,11 @@ export default createRouter({
         default: RobotBuilder,
         sidebar: SidebarBuild,
       },
+    },
+    {
+      name: 'Cart',
+      path: '/cart',
+      component: ShopingCart,
     },
     {
       path: '/parts/browse/',
@@ -63,6 +69,10 @@ export default createRouter({
       name: 'Parts',
       component: PartsInfo,
       props: true,
+      beforeEnter(to, from, next) {
+        const isValid = Number.isInteger(Number(to.params.id));
+        next(isValid);
+      },
     },
   ],
 });

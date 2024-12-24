@@ -7,10 +7,11 @@
     </div>
 </template>
 <script>
-import parts from '../data/parts';
+import getPartsMixin from './get-parts-mixin';
 
 export default {
   name: 'PartInfo',
+  mixins: [getPartsMixin],
   props: {
     partType: { type: String },
     id: {
@@ -27,7 +28,7 @@ export default {
         console.error('Missing partType or id in route params');
         return null;
       }
-      const partList = parts[partType];
+      const partList = this.parts[partType];
       return partList ? partList.find((part) => part.id === +id) : null;
     },
   },
