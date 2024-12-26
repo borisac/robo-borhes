@@ -52,12 +52,19 @@
 <script>
 export default {
   name: 'Cart',
+  created() {
+    console.log('Created cart data:', this.$store.state.robots.cart); // Proveri podatke kada se komponenta montira
+  },
+  mounted() {
+    console.log('Mounted cart data:', this.cart); // Proveri podatke kada se komponenta montira
+  },
   computed: {
     cart() {
-      return this.$store.state.cart;
+      console.log(this.$store.state.robots.cart);
+      return this.$store.state.robots.cart;
     },
     cartSaleItems() {
-      return this.$store.getters.cartSaleItems;
+      return this.$store.getters['robots/cartSaleItems'];
     },
   },
 };

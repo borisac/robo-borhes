@@ -1,33 +1,20 @@
-import Vuex from 'vuex';
+/* eslint-disable no-template-curly-in-string */
+/* eslint-disable no-unused-vars */
+import { createStore } from 'vuex';
+import robotsModule from './modules/robots';
+import usersModule from './modules/users';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import axios from 'axios';
-
-Vuex.useStore(Vuex);
-
-export default new Vuex.Store({
+export default createStore({
   state: {
-    cart: [],
-    parts: null,
+    foo: 'root-foo',
   },
-  mutations: {
-    addRobotToCart(state, robot) {
-      state.cart.push(robot);
-    },
-    updateParts(state, parts) {
-      state.parts = parts;
-    },
+  modules: {
+    robots: robotsModule,
+    users: usersModule,
   },
   getters: {
-    cartSaleItems(state) {
-      return state.cart.filter((item) => item.head.onSale);
-    },
-  },
-  actions: {
-    getParts({ commit }) {
-      axios.get('/api/parts')
-        .then((result) => commit('updateParts', result.data)).catch(console.error);
-      // axios.get('http://localhost:8081/api/parts').then((result) => commit('updateParts', result.data)).catch(console.error);
-    },
+    // foo(state) {
+    //   return `root-getter/${state.foo}`;
+    // },
   },
 });

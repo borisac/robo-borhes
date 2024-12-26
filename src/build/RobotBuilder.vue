@@ -46,6 +46,7 @@
 
 <script>
 // import availableParts from '../data/parts';
+import { mapActions } from 'vuex';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
@@ -53,8 +54,14 @@ import CollapsibleSection from '../shared/CollapsibleSection.vue';
 export default {
   name: 'RobotBuilder',
   created() {
-    this.$store.dispatch('getParts');
+    this.getParts(); // sada je ovo metoda iz modula koju direktno pozivamo,
+    // zbog mapper helpera, ubacili smo iz robots.js ovu akciju
+    // i komponenata nam je prepoznje kao metode,
+    //  i ne moramo da imamo dispatch i stavili smo sledecu liniju koda pod komentar
+
+    // this.$store.dispatch('robots/getParts');
   },
+
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
       next(true);
@@ -82,18 +89,31 @@ export default {
   },
   mixins: [createdHookMixin],
   methods: {
+    ...mapActions('robots', ['getParts', 'addRobotToCart']),
+    // ...mapMutations('robots', ['someMutations']),
     addToCart() {
       const robot = this.selectedRobot;
       const cost = robot.head.cost + robot.rightArm.cost + robot.leftArm.cost +
       robot.torso.cost + robot.base.cost;
-      this.$store.commit('addRobotToCart', { ...robot, cost });
-      // this.cart.push({ ...robot, cost });
+      console.log('Adding robot:', { ...robot, cost }); // Proveri šta se šalje
+
+      this.addRobotToCart({ ...robot, cost })
+        .then(() => {
+          console.log('Robot added to cart:', robot);
+          this.$router.push('/cart');
+        });
+
+      // this.$store.dispatch('robots/addRobotToCart', { ...robot, cost })
+      //   .then(() => {
+      //     console.log('Robot added to cart:', robot);
+      //     this.$router.push('/cart');
+      //   });
       this.addedToCart = true;
     },
   },
   computed: {
     availableParts() {
-      return this.$store.state.parts;
+      return this.$store.state.robots.parts;
     },
     saleBorderClass() {
       return this.selectedRobot.head.onSale ? 'sale-border' : '';

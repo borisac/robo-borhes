@@ -1,4 +1,13 @@
 <template>
+  <div>
+    Root foo: {{ rootFoo }} <br/>
+    robots foo: {{ robotsFoo }} <br/>
+    users foo: {{ usersFoo }} <br/>
+    <br/>
+    Root getter foo: {{ rootGetterFoo }} <br/>
+    Root getter foo: {{ robotsGetterFoo }} <br/>
+    Root getter foo: {{ usersGetterFoo }} <br/>
+  </div>
   <header>
     <nav>
       <ul>
@@ -39,6 +48,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'App',
@@ -48,9 +58,36 @@ export default {
   //   };
   // },
   computed: {
+    ...mapState({
+      rootFoo: 'foo',
+      usersFoo: (state) => state.users.foo,
+    }),
+    ...mapState('robots', { robotsFoo: 'foo' }),
+
+    ...mapGetters({ rootGetterFoo: 'foo' }),
+    ...mapGetters('robots', { robotsGetterFoo: 'foo' }),
+
     cart() {
-      return this.$store.state.cart;
+      return this.$store.state.robots.cart;
     },
+    // rootFoo() {
+    //   return this.$store.state.foo;
+    // },
+    // robotsFoo() {
+    //   return this.$store.state.robots.foo;
+    // },
+    // usersFoo() {
+    //   return this.$store.state.users.foo;
+    // },
+    // rootGetterFoo() {
+    //   return this.$store.getters.foo;
+    // },
+    // robotsGetterFoo() {
+    //   return this.$store.getters['robots/foo'];
+    // },
+    // usersGetterFoo() {
+    //   return this.$store.getters['users/foo'];
+    // },
   },
   data() {
     return {
