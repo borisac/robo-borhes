@@ -41,7 +41,7 @@
               {{robot.head.title}}
             </td>
             <td class="cost">
-              {{robot.cost}}
+              {{robot.cost | currency}}
             </td>
           </tr>
         </tbody>
@@ -50,8 +50,13 @@
   </template>
 
 <script>
+import currencyFilter from '../shared/currency-filter';
+
 export default {
   name: 'Cart',
+  filters: {
+    currency: currencyFilter,
+  },
   created() {
     console.log('Created cart data:', this.$store.state.robots.cart); // Proveri podatke kada se komponenta montira
   },
